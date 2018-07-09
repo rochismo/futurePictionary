@@ -37,6 +37,9 @@
 }
 
 Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) => {
+    const updateScrollBar = () => {
+        chat.scrollTop = chat.scrollHeight
+    };
     return {
         handleChatLoad: (ev) => {
             const name = prompt("Input your nickname");
@@ -63,12 +66,6 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
         handleTyping: (data) => {
             feedback.innerHTML = "<p><em>" + data + " is typing . . . </em></p>";
             updateScrollBar();
-        },
-
-        updateScrollBar: () => {
-            // Setup Scroll
-            console.log("Scrolling");
-            chat.scrollTop = chat.scrollHeight;
         },
 
         handleEmpty: () => {
