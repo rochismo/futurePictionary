@@ -1,6 +1,6 @@
 ﻿window.onload = function () {
     // Establish connection
-    const socket = io.connect('http://localhost:8080');
+    const socket = io.connect('http://mypictionary.cleverapps.io/');
 
     // Save DOM elements
     const msg = document.querySelector("#message"),
