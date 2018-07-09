@@ -37,9 +37,11 @@
 }
 
 Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) => {
+
     const updateScrollBar = () => {
         chat.scrollTop = chat.scrollHeight
     };
+
     return {
         handleChatLoad: (ev) => {
             const name = prompt("Input your nickname");
@@ -74,7 +76,7 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
 
         retrieveMessages: (data) => {
             feedback.innerHTML = "";
-            output.innerHTML += "<p><strong>" + data.name + ":</strong>" + data.message + "</p>";
+            output.innerHTML += "<p><strong>" + data.name + ": </strong>" + data.message + "</p>";
         },
 
         handleKeys: (ev) => {
