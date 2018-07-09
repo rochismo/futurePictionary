@@ -47,6 +47,7 @@ const handleConnection = (socket) => {
 
     socket.on('disconnect', function () {
         if (!socket.nickname) return;
+        io.sockets.emit("leave", socket.nickname);
         nicknames.splice(nicknames.indexOf(socket.nickname), 1);
         io.sockets.emit('usernames', nicknames);
     })

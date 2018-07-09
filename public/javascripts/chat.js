@@ -1,7 +1,7 @@
 ﻿window.onload = function () {
     // Establish connection
-    const socket = io.connect('http://mypictionary.cleverapps.io/');
-    //const socket = io.connect('http://localhost:8080/');
+    //const socket = io.connect('http://mypictionary.cleverapps.io/');
+    const socket = io.connect('http://localhost:8080/');
 
     // Save DOM elements
     const msg = document.querySelector("#message"),
@@ -26,6 +26,8 @@
 
     // Listen for events
 
+    socket.on("leave", uses.handleDisconnection);
+
     socket.on('chat', uses.retrieveMessages);
 
     socket.on("typing", uses.handleTyping);
@@ -39,13 +41,14 @@
 Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) => {
 
     const updateScrollBar = () => {
-        chat.scrollTop = chat.scrollHeight
+        chat.scrollTop = chat.scrollHeight * 2;
     };
 
     return {
         handleChatLoad: (ev) => {
             const name = prompt("Input your nickname");
             socket.emit("login", name || "Anonymous");
+            output.innerHTML += "<p><em>" + name + " Joined the fuxin chat </em></p>";
             return name;
         },
 
@@ -63,6 +66,7 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
             if (msg.value == "") {
                 socket.emit('empty');
             }
+            updateScrollBar();
         },
 
         handleTyping: (data) => {
@@ -72,11 +76,13 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
 
         handleEmpty: () => {
             feedback.innerHTML = "";
+            updateScrollBar();
         },
 
         retrieveMessages: (data) => {
             feedback.innerHTML = "";
             output.innerHTML += "<p><strong>" + data.name + ": </strong>" + data.message + "</p>";
+            updateScrollBar();
         },
 
         handleKeys: (ev) => {
@@ -94,6 +100,12 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
             let html = "";
             nicknames.forEach((user) => html += "<p>" + user + "<br>"); 
             users.innerHTML = html;
-        }
+            updateScrollBar();
+        },
+
+        handleDisconnection: (nickname) => {
+            console.log(nickname + " Leaving");
+            output.innerHTML += "<p><em>" + nickname + " Disconnected fro mthe fuxin chat </em></p>";
+        } 
     };
 };
