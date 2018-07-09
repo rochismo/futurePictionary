@@ -43,6 +43,10 @@ const handleConnection = (socket) => {
         socket.nickname = data
         nicknames.push(socket.nickname);
         io.sockets.emit('usernames', nicknames);
+    });
+
+    socket.on("notifyAll", function (data) {
+        io.sockets.emit("notifyAll", data);
     })
 
     socket.on('disconnect', function () {

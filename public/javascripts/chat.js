@@ -36,6 +36,8 @@
 
     socket.on("usernames", uses.handleUsers);
 
+    socket.on("notifyAll", uses.handleLogins);
+
 }
 
 Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) => {
@@ -46,9 +48,9 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
 
     return {
         handleChatLoad: (ev) => {
-            const name = prompt("Input your nickname");
-            socket.emit("login", name || "Anonymous");
-            output.innerHTML += "<p><em>" + name + " Joined the fuxin chat </em></p>";
+            const name = prompt("Input your nickname") || "Anonymous";
+            socket.emit("login", name);
+            socket.emit("notifyAll", name);
             return name;
         },
 
@@ -105,7 +107,11 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
 
         handleDisconnection: (nickname) => {
             console.log(nickname + " Leaving");
-            output.innerHTML += "<p><em>" + nickname + " Disconnected fro mthe fuxin chat </em></p>";
-        } 
+            output.innerHTML += "<p><em>" + nickname + " Disconnected from the fuxin chat </em></p>";
+        },
+
+        handleLogins: (nickname) => {
+            output.innerHTML += "<p><em>" + nickname + " Joined the fuxin chat </em></p>";
+        }
     };
 };
