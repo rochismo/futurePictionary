@@ -1,7 +1,7 @@
 ﻿window.onload = function () {
     // Establish connection
-    const socket = io.connect('http://mypictionary.cleverapps.io/');
-
+    //const socket = io.connect('http://mypictionary.cleverapps.io/');
+    const socket = io.connect("http://localhost:8080");
     // Save DOM elements
     const msg = document.querySelector("#message"),
         name = document.querySelector("#handle"),
@@ -9,9 +9,10 @@
         output = document.querySelector("#output"),
         feedback = document.querySelector("#feedback"),
         chat = document.querySelector("#mario-chat"),
+        vind = document.querySelector("#chat-window"),
         users = document.querySelector("#sidebar");
 
-    const uses = getUses(socket, name, msg, feedback, output, users);
+    const uses = getUses(socket, name, msg, feedback, output, users, vind);
     name.value = uses.handleChatLoad(null) || "No name";
     name.disabled = true;
 
@@ -31,9 +32,10 @@
     socket.on("empty", uses.handleEmpty);
 
     socket.on("usernames", uses.handleUsers);
+
 }
 
-Window.prototype.getUses = (socket, name, msg, feedback, output, users) => {
+Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) => {
     return {
         handleChatLoad: (ev) => {
             const name = prompt("Input your nickname");
@@ -46,6 +48,9 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users) => {
                 message: msg.value,
                 name: name.value
             });
+            // Setup Scroll
+            console.log("Scrolling");
+            chat.scrollTop = chat.scrollHeight;
             msg.value = "";
         },
 
@@ -75,6 +80,10 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users) => {
                     message: msg.value,
                     name: name.value
                 });
+                // Setup Scroll
+                console.log("Scrolling");
+                chat.scrollTop = chat.scrollHeight;
+                
                 msg.value = "";
             }
         },
