@@ -35,18 +35,22 @@ const handleConnection = (socket) => {
 
     // Handle emptying the feedback
     socket.on('empty', function () {
-        console.log("Deleting stuff");
         socket.broadcast.emit('empty', null);
     });
 
     socket.on("login", function (data) {
-        socket.nickname = data
+        socket.nickname = data;
+            
         nicknames.push(socket.nickname);
         io.sockets.emit('usernames', nicknames);
     });
 
     socket.on("notifyAll", function (data) {
         io.sockets.emit("notifyAll", data);
+    });
+
+    socket.on("load", function (data) {
+        io.sockets.emit("usernames", nicknames);
     })
 
     socket.on('disconnect', function () {

@@ -34,10 +34,13 @@
     <Compile Include="public\javascripts\chat.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="public\javascripts\anim.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="routes\index.js" />
     <Compile Include="routes\users.js" />
     <Content Include="package.json" />
-    <Content Include="public\index.html">
+    <Content Include="public\web.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\stylesheets\main.css" />

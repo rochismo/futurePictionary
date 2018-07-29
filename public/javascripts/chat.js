@@ -1,22 +1,38 @@
 ﻿window.onload = function () {
+
     // Establish connection
     const socket = io.connect('http://mypictionary.cleverapps.io/');
     //const socket = io.connect('http://localhost:8080/');
+    const askLogin = (uses) => {
+        name.value = uses.handleName();
+        while (!name.value) {
+            name.value = uses.handleName();
+        }
+
+
+        socket.emit("login", name.value);
+        name.disabled = true;
+    };
 
     // Save DOM elements
-    const msg = document.querySelector("#message"),
+    const msg = document.querySelector("#msg"),
         name = document.querySelector("#handle"),
         sendBtn = document.querySelector("#send"),
         output = document.querySelector("#output"),
         feedback = document.querySelector("#feedback"),
         chat = document.querySelector("#mario-chat"),
         vind = document.querySelector("#chat-window"),
-        users = document.querySelector("#sidebar");
+        users = document.querySelector("#users ");
 
     const uses = getUses(socket, name, msg, feedback, output, users, vind);
-    name.value = uses.handleChatLoad(null) || "No name";
-    name.disabled = true;
+    askLogin(uses);
 
+    handleEvents(uses, sendBtn, msg, socket);
+}
+
+
+
+Window.prototype.handleEvents = (uses, sendBtn, msg, socket) => {
     // Emit events
     sendBtn.onclick = uses.handleClicks;
 
@@ -26,6 +42,10 @@
 
     // Listen for events
 
+    socket.on("usernames", uses.handleUsers)
+
+    socket.on("notifyAll", uses.handleLogins);
+
     socket.on("leave", uses.handleDisconnection);
 
     socket.on('chat', uses.retrieveMessages);
@@ -33,11 +53,7 @@
     socket.on("typing", uses.handleTyping);
 
     socket.on("empty", uses.handleEmpty);
-
-    socket.on("usernames", uses.handleUsers);
-
-    socket.on("notifyAll", uses.handleLogins);
-
+    
 }
 
 Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) => {
@@ -48,9 +64,18 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
 
     return {
         handleChatLoad: (ev) => {
-            const name = prompt("Input your nickname") || "Anonymous";
-            socket.emit("login", name);
-            socket.emit("notifyAll", name);
+            console.log(name.value);
+            socket.emit("login", name.value);
+            socket.emit("notifyAll", name.value);
+            return name.value;
+        },
+
+        handleName: () => {
+            const name = prompt("Type in your user name");
+            if (!name) {
+                alert("Name cannot be empty");
+                return null;
+            }
             return name;
         },
 
@@ -100,7 +125,7 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
 
         handleUsers: (nicknames) => {
             let html = "";
-            nicknames.forEach((user) => html += "<p>" + user + "<br>"); 
+            nicknames.forEach((user) => html += "<li class='list-group-item'>" + user + "</li>"); 
             users.innerHTML = html;
             updateScrollBar();
         },

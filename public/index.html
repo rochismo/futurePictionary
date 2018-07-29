@@ -3,25 +3,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>It works!</title>
     <link href="/stylesheets/main.css" rel="stylesheet" />
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
+
 </head>
 <body>
-    <h1>Mein Chatt</h1>
-    <div id="mario-chat" class="child">
-        <div id="chat-window">
-            <aside id="sidebar" class="child"></aside>
-
-            <div id="output"></div>
-            <div id="feedback"></div>
-        </div>
-        <input id="handle" type="hidden" name="name" placeholder="Handle" value="" />
-        <input id="message" type="text" name="name" placeholder="Message" value="" />
-        <button id="send">Send</button>
-    </div>
-
-    <script src="/javascripts/chat.js"></script>
     
+        <canvas id="cv"></canvas>
+        <div id="container" class="container">
+            <h1 id="title">Mein Chatt</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="well">
+                        <h3>Online Users</h3>
+                        <ul class="list-group" id="users"></ul>
+                    </div>
+                </div>
+                <div id="mario-chat" class="col-md-8">
+                    <div id="chat-window">
+                        <div id="output"></div>
+                        <div id="feedback"></div>
+                    </div>
+
+                </div>
+                <input id="handle" type="hidden" name="name" placeholder="Handle" value="" />
+                <input id="msg" type="text" name="name" placeholder="Message" value="" />
+                <button id="send">Send</button>
+            </div>
+        </div>
+    
+    <script src="/javascripts/chat.js" type="text/javascript"></script>
+    <script src="/javascripts/anim.js" type="text/javascript"></script>
+
 </body>
 </html>

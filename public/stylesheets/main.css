@@ -3,6 +3,34 @@
     overflow:hidden;
 }
 
+#cv {
+    background-color: white;
+}
+
+#picture {
+    position: relative;
+}
+
+#cv {
+    position:absolute;
+}
+
+#container {
+    position:relative;
+    width:100%;
+    padding:8.3333% 8.3333%;
+}
+
+#game {
+    padding:0 16.6666%;
+}
+
+#title {
+    text-align: center;
+    background-color: #f9f9f9;
+    font-style: oblique;
+}
+
 h2 {
     font-size: 18px;
     padding: 10px 20px;
@@ -23,10 +51,10 @@ h2 {
     position:relative;
     overflow:hidden;
     max-width: 600px;
-    margin: 30px auto;
     border: 1px solid #ddd;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
     border-radius: 2px;
+    padding: 0;
 }
 
 #chat-window {
@@ -35,6 +63,10 @@ h2 {
     overflow-y: scroll;
 }
 
+.content {
+    margin: auto;
+    padding: 0 8.3333%;
+}
 #output p {
     padding: 14px 0px;
     margin: 0 20px;
