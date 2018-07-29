@@ -80,6 +80,9 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
         },
 
         handleClicks: (evt) => {
+            if (!msg.value) {
+                return;
+            }
             socket.emit('chat', {
                 message: msg.value,
                 name: name.value
