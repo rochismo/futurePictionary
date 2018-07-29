@@ -101,7 +101,9 @@ canvas.onmousemove = function (ev) {
     mouse.y = event.pageY - totalOffsetY;
 }
 const update = (time) => {
-    requestAnimationFrame(update);
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
     canvas.onmousedown = function () {
         clicked = true;
     }
@@ -119,6 +121,7 @@ const update = (time) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     animateCircles(circles);
+    requestAnimationFrame(update);
 }
 
 update();

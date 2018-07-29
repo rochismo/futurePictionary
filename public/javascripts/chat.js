@@ -56,6 +56,14 @@ Window.prototype.handleEvents = (uses, sendBtn, msg, socket) => {
     
 }
 
+Window.prototype.checkSpaces = (msg) => {
+    let count = 0;
+    for (let word in msg.split("")) {
+        count = word !== ' ' ? ++count : count;
+    }
+    return count;
+}
+
 Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) => {
 
     const updateScrollBar = () => {
@@ -80,7 +88,8 @@ Window.prototype.getUses = (socket, name, msg, feedback, output, users, chat) =>
         },
 
         handleClicks: (evt) => {
-            if (!msg.value) {
+            if (!msg.value || checkSpaces(msg.value) == 0) {
+                msg.value = "";
                 return;
             }
             socket.emit('chat', {
