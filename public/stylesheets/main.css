@@ -3,16 +3,13 @@
     overflow:hidden;
 }
 
-#cv {
-    background-color: white;
-}
-
 #picture {
     position: relative;
 }
 
 #cv {
     position:absolute;
+    background-color: black;
 }
 
 #container {
